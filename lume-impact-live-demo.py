@@ -203,10 +203,10 @@ logger.info(f'Config TOML Loaded - {config}')
 # Saving and loading
 def save_pvdata(filename, pvdata, isotime):
     with h5py.File(filename, 'w') as h5:
-        h5.attrs['isotime'] = np.string_(isotime)
+        h5.attrs['isotime'] = np.bytes_(isotime)
         for k, v in pvdata.items():
             if isinstance(v, str):
-                v =  np.string_(v)
+                v =  np.bytes_(v)
             h5[k] = v 
 def load_pvdata(filename):
     
@@ -470,7 +470,7 @@ def get_snapshot(snapshot_file=None):
             if counter == 5:
                 logger.info(f'VCC is not working. Defaulting to None.')
                 USE_VCC_LOCAL = False
-            elif v.ptp() < 128:
+            elif np.ptp(v) < 128:
                 v = v.astype(np.int8) # Downcast preemptively 
             pvdata[k] = v
         else:
