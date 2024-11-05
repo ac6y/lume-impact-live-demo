@@ -7,6 +7,12 @@
     lume-impact-live-demo.py
     pv_mapping/sc_inj_impact.csv
 
+* more env vars from jb's personal dirs
+    _sample_mappings_and_confs/
+
 * test command
+. _sample_mappings_and_confs/prodOnDev.bash
+. _sample_mappings_and_confs/setup-env-vars.bash
+
 ipython lume-impact-live-demo.py -- -t "s3df"
 
