@@ -1,0 +1,12 @@
+* env updated with pydantic: environment-dev.yml
+* use command
+
+* updated env var files etc;
+    configs/s3df_sc_inj.toml
+    environment-dev.yml
+    lume-impact-live-demo.py
+    pv_mapping/sc_inj_impact.csv
+
+* test command
+ipython lume-impact-live-demo.py -- -t "s3df"
+
