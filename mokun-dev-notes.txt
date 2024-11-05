@@ -1,4 +1,5 @@
 * env updated with pydantic: environment-dev.yml
+
 * use command
 
 * updated env var files etc;
@@ -9,10 +10,18 @@
 
 * more env vars from jb's personal dirs
     _sample_mappings_and_confs/
+    * logging to ~/lume-output/logs/
 
 * test command
 . _sample_mappings_and_confs/prodOnDev.bash
 . _sample_mappings_and_confs/setup-env-vars.bash
+ipython lume-impact-live-demo.py -- -t "s3df"
+
+* dev version with total_charge_pC sanity check disabled so we can run during PAMM
+  and full tracebacks logged, and any other changes during initial basic debug work
 
 ipython lume-impact-live-demo.py -- -t "s3df"
+
+
+
 
