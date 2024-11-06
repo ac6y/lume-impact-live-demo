@@ -23,5 +23,33 @@ ipython lume-impact-live-demo.py -- -t "s3df"
 ipython lume-impact-live-demo.py -- -t "s3df"
 
 
+(the list-index-out-of-range  error in impact.py likely due to ImpactTexe binary failure
+need to troubleshoot this and confirm installation
+)
 
+------------------------
+$ /miniconda3/envs/lume-live-dev/bin/ImpactTexe
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+#0  0x7ff0d07f995d in already_open
+	at ../../../libgfortran/io/open.c:742
+#1  0x557817ac3623 in ???
+#2  0x557817ae34f5 in ???
+#3  0x557817a58099 in ???
+#4  0x7ff0cff19cf2 in ???
+#5  0x557817a580f9 in ???
+#6  0xffffffffffffffff in ???
+--------------------------------------------------------------------------
+mpirun detected that one or more processes exited with non-zero status, thus causing
+the job to be terminated. The first process to do so was:
+
+  Process name: [[1008,1],0]
+  Exit code:    2
+------------------------
+
+
+
+looks like CM's lume-impact pip install was commented out of the conda yml in lume-impact-live-demo.
+Trying to re-enable it, as it includes impact-t=*=mpi_openmpi*.
 
