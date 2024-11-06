@@ -28,7 +28,7 @@ need to troubleshoot this and confirm installation
 )
 
 ------------------------
-$ /miniconda3/envs/lume-live-dev/bin/ImpactTexe
+$ ~/miniconda3/envs/lume-live-dev/bin/ImpactTexe
 Primary job  terminated normally, but 1 process returned
 a non-zero exit code. Per user-direction, the job has been aborted.
 --------------------------------------------------------------------------
