@@ -301,6 +301,7 @@ SETTINGS0['numprocs'] = NUM_PROCS
 CONFIG0["workdir"] = replaceEnvironmentFiles(get_path('workdir'))
 
 if DEBUG:
+    logger.setLevel(logging.DEBUG)
     logger.info('DEBUG MODE: Running without space charge for speed. ')
     SETTINGS0['distgen:n_particle'] = 1000
     SETTINGS0['total_charge'] = 0
@@ -610,6 +611,7 @@ def run1():
         snapshot_dir=SNAPSHOT_DIR_DATED,
         snapshot_file=SNAPSHOT)        
 
+
     dat['isotime'] = itime
     
     # Record inputs
@@ -618,6 +620,17 @@ def run1():
     dat['pv_mapping_dataframe'] = df.to_dict()
     
     logger.info(f'Running evaluate_impact_with_distgen...')
+
+    logger.debug("##########################  START DEBUG OUTPUT ##############################")
+    logger.debug(f"Settings acquired are:")
+    logger.debug(f'dat:\n{dat}')
+    logger.debug(f'img:\n{img}')
+    logger.debug(f'cutimg:\n{cutimg}')
+    logger.debug(f'itime:\n{itime}')
+    logger.debug("##########################  END DEBUG OUTPUT ##############################")
+    # TODO remove DEBUG exit
+    if DEBUG:
+        sys.exit()
 
     t0 = time()
     
@@ -651,7 +664,9 @@ def run1():
 
 
 if __name__ == '__main__':
+    # TODO debug mode
     import traceback
+
     while True:
         try:
             result = run1()
