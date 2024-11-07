@@ -35,6 +35,8 @@ import matplotlib as mpl
 
 from pmd_beamphysics.units import e_charge
 
+from pprint import pprint, pformat
+
 
 # In[49]:
 
@@ -623,14 +625,14 @@ def run1():
 
     logger.debug("##########################  START DEBUG OUTPUT ##############################")
     logger.debug(f"Settings acquired are:")
-    logger.debug(f'dat:\n{dat}')
-    logger.debug(f'img:\n{img}')
-    logger.debug(f'cutimg:\n{cutimg}')
-    logger.debug(f'itime:\n{itime}')
+    logger.debug(f'dat:\n{pformat(dat)}')
+    logger.debug(f'img:\n{pformat(img)}')
+    logger.debug(f'cutimg:\n{pformat(cutimg)}')
+    logger.debug(f'itime:\n{pformat(itime)}')
     logger.debug("##########################  END DEBUG OUTPUT ##############################")
     # TODO remove DEBUG exit
-    if DEBUG:
-        sys.exit()
+    #if DEBUG:
+    #    sys.exit()
 
     t0 = time()
     
@@ -678,7 +680,7 @@ if __name__ == '__main__':
                 logger.info('Stopping the Program')
                 break
             else:
-                logger.exception(traceback.format_exc())
+                logger.debug(traceback.format_exc())
                 logger.info('Something BAD happened. Sleeping for 10 s ...')      
                 sleep(10)
             
