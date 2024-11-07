@@ -604,10 +604,12 @@ def run1():
     SUMMARY_OUTPUT_DIR_DATED = convertToDatedFormat(SUMMARY_OUTPUT_DIR)
         
     # Acquire settings
-    mysettings, df, img, cutimg, itime = get_settings(CSV,
-                                                           SETTINGS0,
-                                                           snapshot_dir=SNAPSHOT_DIR_DATED,
-                                                          snapshot_file=SNAPSHOT)        
+    mysettings, df, img, cutimg, itime = get_settings(
+        CSV,
+        SETTINGS0,
+        snapshot_dir=SNAPSHOT_DIR_DATED,
+        snapshot_file=SNAPSHOT)        
+
     dat['isotime'] = itime
     
     # Record inputs
@@ -626,10 +628,11 @@ def run1():
 #        logger.info(f'total charge is too low: {total_charge_pC:.2f} pC, skipping')
 #        return dat
 #    
-    outputs = evaluate_impact_with_distgen(mysettings,
-                                       merit_f=lambda x: my_merit(x, itime),
-                                       archive_path=ARCHIVE_DIR_DATED,
-                                       **CONFIG0, verbose=True )
+    outputs = evaluate_impact_with_distgen(
+        mysettings,
+        merit_f=lambda x: my_merit(x, itime),
+        archive_path=ARCHIVE_DIR_DATED,
+        **CONFIG0, verbose=True)
     
     dat['outputs'] =  outputs   
     logger.info(f'...finished in {(time()-t0)/60:.1f} min')
