@@ -638,7 +638,7 @@ def run1():
     
     total_charge_pC = mysettings['distgen:total_charge:value']
 
- # TODO disabled just for dev testing during PAMM outage
+    # TODO disabled just for dev testing during PAMM outage
     if total_charge_pC < MIN_CHARGE_pC:
         logger.info(f'total charge is too low: {total_charge_pC:.2f} pC, skipping')
         if DEBUG:
