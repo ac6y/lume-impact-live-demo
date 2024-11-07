@@ -629,7 +629,7 @@ def run1():
     logger.debug(f'img:\n{pformat(img)}')
     logger.debug(f'cutimg:\n{pformat(cutimg)}')
     logger.debug(f'itime:\n{pformat(itime)}')
-    logger.debug("##########################  END DEBUG OUTPUT ##############################")
+    logger.debug("##########################  /END DEBUG OUTPUT ###############################")
     # TODO remove DEBUG exit
     #if DEBUG:
     #    sys.exit()
@@ -638,11 +638,16 @@ def run1():
     
     total_charge_pC = mysettings['distgen:total_charge:value']
 
-# # TODO disabled just for dev testing during PAMM outage
-#    if total_charge_pC < MIN_CHARGE_pC:
-#        logger.info(f'total charge is too low: {total_charge_pC:.2f} pC, skipping')
-#        return dat
-#    
+ # TODO disabled just for dev testing during PAMM outage
+    if total_charge_pC < MIN_CHARGE_pC:
+        logger.info(f'total charge is too low: {total_charge_pC:.2f} pC, skipping')
+        if DEBUG:
+            logger.debug("##########################  DEBUG!! ##############################")
+            logger.info('DEBUG mode enabled: continuing even though charge is too low!')
+            logger.debug("##########################  /END DEBUG ###########################")
+        else:
+            return dat
+    
     outputs = evaluate_impact_with_distgen(
         mysettings,
         merit_f=lambda x: my_merit(x, itime),
