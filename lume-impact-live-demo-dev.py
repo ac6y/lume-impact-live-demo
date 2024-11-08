@@ -648,6 +648,10 @@ def run1():
         else:
             return dat
     
+    # TODO rm debugger breakpoint
+    if DEBUG:
+        breakpoint()
+
     outputs = evaluate_impact_with_distgen(
         mysettings,
         merit_f=lambda x: my_merit(x, itime),
