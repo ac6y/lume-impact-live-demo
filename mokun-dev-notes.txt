@@ -68,9 +68,13 @@ pip install git+https://github.com/slaclab/lcls-live
 
 # mpi_run_cmd="salloc --partition milano --account ad:ard-online -N 1 -n {nproc} mpirun -n {nproc} {command_mpi}"
 ################################
+# working notebook is:
+# jingyi_lume-impact-live-demo.ipynb
+
 # After confirming jupyter notebook was running, I re-exported my env to 
 # environment2-mokun-working-export.yml
 
+################################
 
 
 
