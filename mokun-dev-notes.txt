@@ -53,3 +53,24 @@ the job to be terminated. The first process to do so was:
 looks like CM's lume-impact pip install was commented out of the conda yml in lume-impact-live-demo.
 Trying to re-enable it, as it includes impact-t=*=mpi_openmpi*.
 
+
+######################################################################
+## Notes from session with Jingyi 2024-11-13
+# environment2-jingyi-export.yml was created from jingyi's working env
+# (before installing via the full export,
+# ImpactTexe-mpi was throwing an error re: libcudart.so2, even if bin copied from her conda env)
+
+conda env create --name lume-live-dev-jingyi-export -f environment2-jingyi-export.yml 
+
+# lume-live was not found in pypi, so we then installed it via:
+pip install git+https://github.com/slaclab/lcls-live
+
+
+# mpi_run_cmd="salloc --partition milano --account ad:ard-online -N 1 -n {nproc} mpirun -n {nproc} {command_mpi}"
+################################
+# After confirming jupyter notebook was running, I re-exported my env to 
+# environment2-mokun-working-export.yml
+
+
+
+
