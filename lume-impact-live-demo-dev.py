@@ -3,22 +3,8 @@
 
 # # Live cu-inj-live-impact 
 
-# In[46]:
-
-
-# Setup directories, and convert dashboard notebook to a script for importing
-#!./setup.bash
-print("Running LUME IMPACT SERVICE.....")
-
-
-# In[47]:
-
-
 get_ipython().run_line_magic('load_ext', 'autoreload')
 get_ipython().run_line_magic('autoreload', '2')
-
-
-# In[48]:
 
 
 from impact import evaluate_impact_with_distgen, run_impact_with_distgen
@@ -36,9 +22,6 @@ import matplotlib as mpl
 from pmd_beamphysics.units import e_charge
 
 from pprint import pprint, pformat
-
-
-# In[49]:
 
 
 import pandas as pd
@@ -62,9 +45,6 @@ mpl.use('Agg')
 
 # Nicer plotting
 get_ipython().run_line_magic('config', "InlineBackend.figure_format = 'retina'")
-
-
-# In[ ]:
 
 
 #Sanity Checks for OS Environments
@@ -94,11 +74,6 @@ def replaceEnvironmentFiles(file_location):
     return file_location
 
 
-# # Top level config
-
-# In[ ]:
-
-
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -110,17 +85,11 @@ parser.add_argument("-t", "--host", help = "Mention the host", default = "singul
 parser.add_argument("-p", "--num_procs", help = "Mention the Num Procs", default = 64)
 
 
-# In[ ]:
-
-
 def convertStringToBoolean(argument):
     if argument == 'True' or argument == 'true' or argument == True:
         return True
     else:
         return False
-
-
-# In[52]:
 
 
 args = vars(parser.parse_args())
@@ -138,8 +107,6 @@ config = toml.load(f"configs/{HOST}_{MODEL}.toml")
 PREFIX = f'lume-impact-live-demo-{HOST}-{MODEL}'
 
 
-# In[ ]:
-
 
 def convertToDatedFormat(destionation_folder):
     curr_date = datetime.date.today()
@@ -153,9 +120,6 @@ def convertToDatedFormat(destionation_folder):
 
 
 # ## Logging
-
-# In[54]:
-
 
 import logging
 from logging.handlers import RotatingFileHandler
@@ -182,9 +146,6 @@ file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
 
-# In[ ]:
-
-
 #Arguments -
 
 logger.info('Start of Script Marker - Script Running with Arguments - ')
@@ -194,13 +155,10 @@ logger.info(f'LIVE - {LIVE}')
 logger.info(f'MODEL - {MODEL}')
 logger.info(f'HOST - {HOST}')
 logger.info(f'NUM_PROCS_ARGS - {NUM_PROCS_ARGS}')
-logger.info(f'Config TOML Loaded - {config}')
+logger.info(f'Config TOML Loaded:\n{pformat(config)}')
 
 
 # ## Utils
-
-# In[55]:
-
 
 # Saving and loading
 def save_pvdata(filename, pvdata, isotime):
@@ -231,8 +189,6 @@ def load_pvdata(filename):
 # Set up basic input sources and output path, loaded from toml environment file.
 # 
 # See README for required toml definition.
-
-# In[56]:
 
 
 HOST = config.get('host') # mcc-simul or 'sdf'
@@ -283,10 +239,6 @@ if HOST == 'sdf':
        raise ValueError("impact_command_mpi not defined in toml.")
 
 
-
-# In[57]:
-
-
 CONFIG0 = {}
 
 # Base settings
@@ -323,11 +275,7 @@ else:
     raise ValueError(f'Unknown host: {HOST}')
     
 
-
 # # Select: LCLS or FACET
-
-# In[59]:
-
 
 # PV -> Sim conversion table
 CSV =  f'pv_mapping/{MODEL}_impact.csv'  
@@ -389,25 +337,15 @@ else:
     raise
 
 
-# In[60]:
-
-
 CONFIG0, SETTINGS0
-logger.info(f'FINAL SETTINGS - {SETTINGS0}')
+logger.info(f'FINAL SETTINGS:\n{pformat(SETTINGS0)}')
 
 
 # # Set up monitors
 
-# In[61]:
-
-
 # Gun: 700 kV
 # Buncher: 200 keV energy gain
 # Buncher: +60 deg relative to on-crest
-
-
-# In[62]:
-
 
 DF = pd.read_csv(CSV)#.dropna()
 
@@ -420,17 +358,10 @@ else:
 #DF.set_index('device_pv_name', inplace=True)
 DF
 
-
-# In[63]:
-
-
 if LIVE:
     MONITOR = {pvname:epics.PV(pvname) for pvname in PVLIST}
     SNAPSHOT = None
     sleep(5)
-
-
-# In[64]:
 
 
 def get_snapshot(snapshot_file=None):
@@ -487,8 +418,6 @@ def get_snapshot(snapshot_file=None):
 
 # # EPICS -> Simulation settings
 
-# In[66]:
-
 
 def get_settings(csv, base_settings={}, snapshot_dir=None, snapshot_file=None):
     """
@@ -540,9 +469,6 @@ def get_settings(csv, base_settings={}, snapshot_dir=None, snapshot_file=None):
     return settings, df, img, cutimg, itime
 
 
-# In[69]:
-
-
 DO_TIMING = False
 
 if DO_TIMING:
@@ -565,8 +491,6 @@ if DO_TIMING:
 
 
 # # Get live values, run Impact-T, make dashboard
-
-# In[70]:
 
 
 # Patch this into the function below for the dashboard creation
@@ -596,9 +520,6 @@ def my_merit(impact_object, itime):
     return merit0
 
 
-# In[71]:
-
-
 def run1():
     dat = {}
 
@@ -623,16 +544,13 @@ def run1():
     
     logger.info(f'Running evaluate_impact_with_distgen...')
 
-    logger.debug("##########################  START DEBUG OUTPUT ##############################")
-    logger.debug(f"Settings acquired are:")
-    logger.debug(f'dat:\n{pformat(dat)}')
-    logger.debug(f'img:\n{pformat(img)}')
-    logger.debug(f'cutimg:\n{pformat(cutimg)}')
-    logger.debug(f'itime:\n{pformat(itime)}')
-    logger.debug("##########################  /END DEBUG OUTPUT ###############################")
-    # TODO remove DEBUG exit
-    #if DEBUG:
-    #    sys.exit()
+    logger.info("##########################  START SETTINGS INFO OUTPUT #######################")
+    logger.info(f"Settings acquired are:")
+    logger.info(f'dat:\n{pformat(dat)}')
+    logger.info(f'img:\n{pformat(img)}')
+    logger.info(f'cutimg:\n{pformat(cutimg)}')
+    logger.info(f'itime:\n{pformat(itime)}')
+    logger.info("##########################  /END SETTING INFO OUTPUT ##########################")
 
     t0 = time()
     
@@ -666,14 +584,8 @@ def run1():
     logger.info(f'Summary output written: {fname}')
     return dat
     
-
-
 # # loop it
 # 
-
-# In[78]:
-
-
 if __name__ == '__main__':
     # TODO debug mode
     import traceback
@@ -693,10 +605,3 @@ if __name__ == '__main__':
                 logger.info('Something BAD happened. Sleeping for 10 s ...')      
                 sleep(10)
             
-
-
-# In[ ]:
-
-
-
-
