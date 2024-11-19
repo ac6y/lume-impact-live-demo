@@ -567,8 +567,8 @@ def run1():
             return dat
     
     # TODO rm debugger breakpoint
-    if DEBUG:
-        breakpoint()
+#    if DEBUG:
+#        breakpoint()
 
     outputs = evaluate_impact_with_distgen(
         mysettings,
