@@ -67,6 +67,13 @@ pip install git+https://github.com/slaclab/lcls-live
 
 
 # mpi_run_cmd="salloc --partition milano --account ad:ard-online -N 1 -n {nproc} mpirun -n {nproc} {command_mpi}"
+
+# needed to update ./configs/s3df-sc-inj.toml
+and add slurm account for  salloc command to work successfully
+
+lcls-live 
+pip install git+https://github.com/slaclab/lcls-live
+
 ################################
 # working notebook is:
 # jingyi_lume-impact-live-demo.ipynb
